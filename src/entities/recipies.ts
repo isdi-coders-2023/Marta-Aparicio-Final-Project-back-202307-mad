@@ -1,6 +1,6 @@
 import { User } from './users';
 
-export type Recipies = {
+export type Recipe = {
   name: string;
   category: string;
   Ingredients: string;
