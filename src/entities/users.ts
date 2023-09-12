@@ -1,5 +1,5 @@
-import { WithId } from '../types/id';
-import { Recipe } from './recipies';
+import { WithId } from '../types/id.js';
+import { Recipe } from './recipies.js';
 
 type LoginData = {
   userName: string;
