@@ -1,5 +1,5 @@
 import { WithId } from '../types/id';
-import { Recipies } from './recipies';
+import { Recipe } from './recipies';
 
 type LoginData = {
   userName: string;
@@ -9,7 +9,7 @@ type UserNoId = LoginData & {
   firstName: string;
   lastName: string;
   email: string;
-  recipies: Recipies[];
+  recipies: Recipe[];
 };
 
 export type User = WithId & UserNoId;
