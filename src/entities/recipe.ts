@@ -1,3 +1,4 @@
+import { WithId } from '../types/id.js';
 import { User } from './user.js';
 
 export type Recipe = {
@@ -7,4 +8,4 @@ export type Recipe = {
   mode: string;
   img: string;
   author: User;
-};
+} & WithId;

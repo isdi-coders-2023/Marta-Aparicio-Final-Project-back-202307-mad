@@ -5,5 +5,5 @@ export interface Repository<T> {
   post(newData: Omit<T, 'id'>): Promise<T>;
   patch(id: string, newData: Partial<T>): Promise<T>;
   delete(id: string): Promise<void>;
-  search({ key, value }: { key: string; value: unknown }): Promise<T[]>;
+  search?({ key, value }: { key: string; value: unknown }): Promise<T[]>;
 }

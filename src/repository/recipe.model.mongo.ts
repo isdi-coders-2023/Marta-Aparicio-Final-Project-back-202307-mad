@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { Recipe } from '../entities/recipe';
+import { Recipe } from '../entities/recipe.js';
 
 const userSchema = new Schema<Recipe>({
   name: {
@@ -40,4 +40,4 @@ userSchema.set('toJSON', {
   },
 });
 
-export const UserModel = model('Recipe', userSchema, 'recipies');
+export const RecipeModel = model('Recipe', userSchema, 'recipies');
