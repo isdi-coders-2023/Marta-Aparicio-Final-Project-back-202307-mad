@@ -1,7 +1,7 @@
 import { WithId } from '../types/id.js';
 import { Recipe } from './recipe.js';
 
-type LoginData = {
+export type LoginData = {
   userName: string;
   password: string;
 };
