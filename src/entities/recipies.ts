@@ -1,4 +1,4 @@
-import { User } from './users';
+import { User } from './users.js';
 
 export type Recipe = {
   name: string;
