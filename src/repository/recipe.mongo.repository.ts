@@ -3,7 +3,7 @@ import { Recipe } from '../entities/recipe.js';
 import { HttpError } from '../types/http.error.js';
 import { RecipeModel } from './recipe.model.mongo.js';
 import { Repository } from './repository.js';
-const debug = createDebug('W6E:Repo:RecipesMongoRepo');
+const debug = createDebug('Proyecto-final:Repo:RecipesMongoRepo');
 
 export class RecipeMongoRepository implements Repository<Recipe> {
   constructor() {

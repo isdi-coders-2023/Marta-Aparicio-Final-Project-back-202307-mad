@@ -4,7 +4,7 @@ import { UsersController } from '../controller/user.controller.js';
 import createDebug from 'debug';
 import { AuthInterceptor } from '../middleware/auth.interceptor.js';
 import { UserMongoRepository } from '../repository/user.mongo.repository.js';
-const debug = createDebug('Users:Router:UsersRouter');
+const debug = createDebug('Protecto-final:Router:UsersRouter');
 
 debug('Loaded');
 const repo = new UserMongoRepository();
