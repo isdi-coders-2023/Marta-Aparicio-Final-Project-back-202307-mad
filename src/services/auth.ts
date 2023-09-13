@@ -1,12 +1,9 @@
 import bcrypt from 'bcrypt';
 import 'dotenv/config';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { HttpError } from '../types/http.error.js';
+import { TokenPayload } from '../types/token.js';
 
-export type TokenPayload = JwtPayload & {
-  id: string;
-  userName: string;
-};
 export class Auth {
   static passwd = process.env.TOKEN_PASSWD!;
   static hash(passwd: string) {
