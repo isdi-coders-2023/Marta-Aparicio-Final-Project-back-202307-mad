@@ -5,7 +5,7 @@ import { Auth } from '../services/auth.js';
 import { HttpError } from '../types/http.error.js';
 import { WithId } from '../types/id.js';
 
-const debug = createDebug('W7E:Middleware:Auth.Interceptor');
+const debug = createDebug('Users:Middleware:Auth.Interceptor');
 
 debug('Loaded');
 

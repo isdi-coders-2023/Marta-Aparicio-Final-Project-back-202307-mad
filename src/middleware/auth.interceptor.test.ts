@@ -52,7 +52,7 @@ describe('Given AuthInterceptor and instantiate it', () => {
       owner: User;
     };
     const repo = {
-      getById: jest.fn().mockResolvedValue({
+      get: jest.fn().mockResolvedValue({
         owner: { id: 12 },
       }),
     } as unknown as Repository<Item>;
@@ -83,11 +83,7 @@ describe('Given AuthInterceptor and instantiate it', () => {
       } as Request;
 
       await authenticationMiddleware(mockRequest, mockResponse, mockNext);
-      expect(mockNext).toHaveBeenCalledWith(
-        expect.objectContaining({
-          status: 403,
-        })
-      );
+      expect(mockNext).toHaveBeenCalledWith(new Error('Not item owner'));
     });
   });
 });
