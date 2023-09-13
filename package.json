@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:new": "node --watch dist/index.js",
-    "server": "cross-env PORT=4300 DEBUG=W7E* nodemon dist/index.js",
+    "server": "cross-env PORT=4300 DEBUG=Proyecto-final* nodemon dist/index.js",
     "server:prod": "cross-env PORT=4300 node dist/index.js",
     "build": "tsc --watch",
     "test": "jest --watchAll --coverage",
