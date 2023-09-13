@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { Recipe } from '../entities/recipe.js';
 
-const userSchema = new Schema<Recipe>({
+const recipeSchema = new Schema<Recipe>({
   name: {
     type: String,
     required: true,
@@ -31,7 +31,7 @@ const userSchema = new Schema<Recipe>({
   },
 });
 
-userSchema.set('toJSON', {
+recipeSchema.set('toJSON', {
   transform(_document, returnedObject) {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
@@ -40,4 +40,4 @@ userSchema.set('toJSON', {
   },
 });
 
-export const RecipeModel = model('Recipe', userSchema, 'recipies');
+export const RecipeModel = model('Recipe', recipeSchema, 'recipies');

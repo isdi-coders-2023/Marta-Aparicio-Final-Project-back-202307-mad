@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { LoginData, User } from '../entities/user.js';
 import { UserMongoRepository } from '../repository/user.mongo.repository.js';
-import { Auth, TokenPayload } from '../services/auth.js';
+import { Auth } from '../services/auth.js';
 import { HttpError } from '../types/http.error.js';
+import { TokenPayload } from '../types/token.js';
 import { Controller } from './controller.js';
 
 export class UsersController extends Controller<User> {
@@ -34,7 +35,6 @@ export class UsersController extends Controller<User> {
       if (!(await Auth.compare(password, user.password))) {
         throw error;
       }
-
       const payload: TokenPayload = {
         id: user.id,
         userName: user.userName,
