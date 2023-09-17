@@ -45,4 +45,4 @@ recipeSchema.set('toJSON', {
   },
 });
 
-export const RecipeModel = model('Recipe', recipeSchema, 'recipies');
+export const RecipeModel = model('Recipe', recipeSchema, 'recipes');
