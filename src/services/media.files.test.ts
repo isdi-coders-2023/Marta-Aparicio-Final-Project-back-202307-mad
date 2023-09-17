@@ -26,7 +26,6 @@ describe('Given CloudinaryService', () => {
       const img = {} as ImgData;
       cloudinaryBase.v2.url = jest.fn();
       await cloudinary.resizeImage(img);
-
       expect(cloudinaryBase.v2.url).toHaveBeenCalled();
     });
   });
