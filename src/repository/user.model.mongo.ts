@@ -16,6 +16,7 @@ const userSchema = new Schema<User>({
     type: String,
     required: true,
   },
+
   recipies: [
     {
       type: Schema.Types.ObjectId,
