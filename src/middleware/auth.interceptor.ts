@@ -1,9 +1,8 @@
 import createDebug from 'debug';
 import { NextFunction, Request, Response } from 'express';
-import { Repository } from '../repository/repository.js';
+import { RecipeMongoRepository } from '../repository/recipe.mongo.repository.js';
 import { Auth } from '../services/auth.js';
 import { HttpError } from '../types/http.error.js';
-import { WithId } from '../types/id.js';
 
 const debug = createDebug('Proyecto-final:Middleware:Auth.Interceptor');
 
@@ -27,25 +26,23 @@ export class AuthInterceptor {
     }
   }
 
-  authentication<T extends { id: unknown }>(
-    itemsRepo: Repository<T>,
-    ownerKey: keyof T
-  ) {
-    return async (req: Request, _res: Response, next: NextFunction) => {
-      debug('Call authentication interceptor');
-      const userID = req.body.validatedId;
-      const itemID = req.params.id;
-      try {
-        const item = await itemsRepo.get(itemID);
-        const itemOwner = (item[ownerKey] as WithId).id;
-        if (itemOwner !== userID) {
-          throw new HttpError(403, 'Forbidden', 'Not item owner');
-        }
+  async authentication(req: Request, _res: Response, next: NextFunction) {
+    debug('Call notesAuthentication');
+    const userID = req.body.validatedId;
+    const recipeID = req.params.id;
 
-        next();
-      } catch (error) {
+    try {
+      const recipesRepo = new RecipeMongoRepository();
+      const recipe = await recipesRepo.get(recipeID);
+
+      if (recipe.author.id !== userID) {
+        const error = new HttpError(403, 'Forbidden', 'Not note owner');
         next(error);
       }
-    };
+
+      next();
+    } catch (error) {
+      next(error);
+    }
   }
 }
