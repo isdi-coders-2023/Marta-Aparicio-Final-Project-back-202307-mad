@@ -8,3 +8,6 @@ export class HttpError extends Error {
     super(message, options);
   }
 }
+export type CloudinaryError = {
+  error: Error;
+};
