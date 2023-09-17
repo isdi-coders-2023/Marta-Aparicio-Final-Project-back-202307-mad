@@ -6,8 +6,6 @@ export type LoginData = {
   password: string;
 };
 type UserNoId = LoginData & {
-  firstName: string;
-  lastName: string;
   email: string;
   recipies: Recipe[];
 };

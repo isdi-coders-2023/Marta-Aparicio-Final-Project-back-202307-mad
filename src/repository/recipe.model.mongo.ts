@@ -22,8 +22,13 @@ const recipeSchema = new Schema<Recipe>({
     required: true,
   },
   img: {
-    type: String,
-    required: true,
+    type: {
+      publicId: { type: String },
+      width: { type: Number },
+      height: { type: Number },
+      format: { type: String },
+      url: { type: String },
+    },
   },
   author: {
     type: Schema.Types.ObjectId,

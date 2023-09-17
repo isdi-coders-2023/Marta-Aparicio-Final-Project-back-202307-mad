@@ -18,5 +18,6 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use('/users', userRouter);
+
 const error = new ErrorMiddleware();
 app.use(error.manageErrors.bind(error));
