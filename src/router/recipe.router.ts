@@ -28,7 +28,7 @@ recipeRouter.patch(
   recipeController.patch.bind(recipeController)
 );
 recipeRouter.delete(
-  '/',
+  '/:id',
   authInterceptor.authorization.bind(authInterceptor),
   authInterceptor.authentication.bind(authInterceptor),
   recipeController.delete.bind(recipeController)
