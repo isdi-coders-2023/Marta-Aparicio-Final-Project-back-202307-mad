@@ -11,6 +11,7 @@ debug('Loaded');
 export class AuthInterceptor {
   authorization(req: Request, _res: Response, next: NextFunction) {
     debug('Call authorization interceptor');
+    debugger;
     try {
       const token = req.get('Authorization')?.split(' ')[1];
       if (!token) {
@@ -27,16 +28,15 @@ export class AuthInterceptor {
   }
 
   async authentication(req: Request, _res: Response, next: NextFunction) {
-    debug('Call notesAuthentication');
+    debug('Call recipesAuthentication');
     const userID = req.body.validatedId;
     const recipeID = req.params.id;
-
     try {
       const recipesRepo = new RecipeMongoRepository();
       const recipe = await recipesRepo.get(recipeID);
 
       if (recipe.author.id !== userID) {
-        const error = new HttpError(403, 'Forbidden', 'Not note owner');
+        const error = new HttpError(403, 'Forbidden', 'Not recipe owner');
         next(error);
       }
 

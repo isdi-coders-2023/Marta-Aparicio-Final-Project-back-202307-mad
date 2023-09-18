@@ -7,7 +7,7 @@ import { UserMongoRepository } from '../repository/user.mongo.repository.js';
 import { CloudinaryService } from '../services/media.files.js';
 import { HttpError } from '../types/http.error.js';
 import { Controller } from './controller.js';
-const debug = createDebug('W6E:Controller:RecipesController');
+const debug = createDebug('Proyecto-final:Controller:RecipesController');
 
 export class RecipesController extends Controller<Recipe> {
   cloudinary: CloudinaryService;
@@ -30,6 +30,7 @@ export class RecipesController extends Controller<Recipe> {
       const img = await this.cloudinary.uploadImage(finalPath);
       req.body.img = img;
       const finalRecipe = await this.repo.post(req.body);
+      debug(finalRecipe);
       user.recipes.push(finalRecipe);
       userRepo.patch(user.id, user);
       res.status(201);
@@ -40,32 +41,11 @@ export class RecipesController extends Controller<Recipe> {
   }
   async patch(req: Request, res: Response, next: NextFunction) {
     try {
-      if (req.file) {
-        const finalPath = req.file.destination + '/' + req.file!.filename;
-        const img = await this.cloudinary.uploadImage(finalPath);
-        req.body.img = img;
-      }
-      const { validatedId } = req.body;
-      const userRepo = new UserMongoRepository();
-      const user = await userRepo.get(validatedId);
-      req.body.author = user.id;
-      const updatedRecipe = await this.repo.patch(req.body.author, req.body);
-      user.recipes.push(updatedRecipe);
-      userRepo.patch(user.id, user);
+      if (!this.repo.patch) return;
+      const recipeId = req.params.id;
+      const recipe = await this.repo.get(recipeId);
+      const updatedRecipe = await this.repo.patch(recipe.id, req.body);
       res.json(updatedRecipe);
-      res.status(201);
-    } catch (error) {
-      next(error);
-    }
-  }
-  async delete(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { validatedId } = req.body;
-      const userRepo = new UserMongoRepository();
-      const user = await userRepo.get(validatedId);
-      const recipe = await this.repo.get(req.body.author);
-      req.body.author = user.id;
-      await this.repo.delete(recipe.id);
       res.status(201);
     } catch (error) {
       next(error);

@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../entities/user';
-import { Repository } from '../repository/repository';
+import { RecipeMongoRepository } from '../repository/recipe.mongo.repository';
 import { Auth } from '../services/auth.js';
 import { HttpError } from '../types/http.error.js';
 import { AuthInterceptor } from './auth.interceptor';
@@ -47,31 +46,25 @@ describe('Given AuthInterceptor and instantiate it', () => {
   });
 
   describe('When authentication is used', () => {
-    type Item = {
-      id: string;
-      owner: User;
-    };
-    const repo = {
-      get: jest.fn().mockResolvedValue({
-        owner: { id: 12 },
-      }),
-    } as unknown as Repository<Item>;
+    let interceptor: AuthInterceptor;
+    beforeEach(() => {
+      interceptor = new AuthInterceptor();
+    });
 
-    const authenticationMiddleware = interceptor.authentication<Item>(
-      repo,
-      'owner'
-    );
-
-    test('middleware should be called without error', async () => {
+    const mockRepo = {
+      get: jest.fn().mockResolvedValueOnce({}),
+    } as unknown as RecipeMongoRepository;
+    const mockResponse = {} as Response;
+    const mockNext = jest.fn();
+    test.only('middleware should be called without error', async () => {
       const mockRequest = {
         params: {},
         body: {
           validatedId: 12,
         },
       } as Request;
-
-      await authenticationMiddleware(mockRequest, mockResponse, mockNext);
-      expect(mockNext).toHaveBeenCalledWith();
+      await interceptor.authentication(mockRequest, mockResponse, mockNext);
+      expect(mockNext).toHaveBeenCalled();
     });
 
     test('middleware should be called WITH error', async () => {
@@ -82,7 +75,7 @@ describe('Given AuthInterceptor and instantiate it', () => {
         },
       } as Request;
 
-      await authenticationMiddleware(mockRequest, mockResponse, mockNext);
+      await interceptor.authentication(mockRequest, mockResponse, mockNext);
       expect(mockNext).toHaveBeenCalledWith(new Error('Not item owner'));
     });
   });

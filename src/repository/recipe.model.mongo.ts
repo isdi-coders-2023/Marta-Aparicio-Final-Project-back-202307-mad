@@ -5,16 +5,14 @@ const recipeSchema = new Schema<Recipe>({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
   category: {
     type: String,
     required: true,
-    unique: true,
   },
 
   ingredients: {
-    type: String,
+    type: [String],
     required: true,
   },
   mode: {

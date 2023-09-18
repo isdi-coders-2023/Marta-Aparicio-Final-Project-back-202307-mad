@@ -5,7 +5,7 @@ import { User } from './user.js';
 export type Recipe = {
   name: string;
   category: 'Legumbres' | 'Pasta' | 'Verdura' | 'Otros' | 'Pescado' | 'Carnes';
-  ingredients: string;
+  ingredients: [string];
   mode: string;
   img: ImgData;
   author: User;
