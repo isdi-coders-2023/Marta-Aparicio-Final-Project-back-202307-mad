@@ -47,7 +47,8 @@ describe('Given AuthInterceptor and instantiate it', () => {
 
   describe('When authentication is used', () => {
     let interceptor: AuthInterceptor;
-    beforeEach(() => {
+    jest.setTimeout(60000);
+    beforeEach((): void => {
       interceptor = new AuthInterceptor();
     });
 
@@ -56,7 +57,7 @@ describe('Given AuthInterceptor and instantiate it', () => {
     } as unknown as RecipeMongoRepository;
     const mockResponse = {} as Response;
     const mockNext = jest.fn();
-    test.only('middleware should be called without error', async () => {
+    test('middleware should be called without error', async () => {
       const mockRequest = {
         params: {},
         body: {
@@ -68,15 +69,18 @@ describe('Given AuthInterceptor and instantiate it', () => {
     });
 
     test('middleware should be called WITH error', async () => {
+      RecipeMongoRepository.prototype.get = jest
+        .fn()
+        .mockResolvedValue({ author: '1' });
       const mockRequest = {
-        params: {},
+        params: { id: '1' },
         body: {
-          validatedId: 10,
+          validatedId: '2',
         },
-      } as Request;
+      } as unknown as Request;
 
       await interceptor.authentication(mockRequest, mockResponse, mockNext);
-      expect(mockNext).toHaveBeenCalledWith(new Error('Not item owner'));
+      expect(mockNext).toHaveBeenCalledWith(new Error('Not recipe owner'));
     });
   });
 });

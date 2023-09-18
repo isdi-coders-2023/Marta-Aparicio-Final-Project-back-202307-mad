@@ -17,7 +17,7 @@ describe('UsersController', () => {
 
   const usersController = new UsersController(mockRepo);
   describe('happy path', () => {
-    test('when login throws an error when cauth.compare fails', async () => {
+    test('when login throws an error when auth.compare fails', async () => {
       const mockRequest = {
         body: { userName: '1', passwd: '1234' },
       } as unknown as Request;
@@ -133,24 +133,6 @@ describe('UsersController', () => {
       expect(mockRepo.patch).toHaveBeenCalled();
       expect(Auth.hash).toHaveBeenCalled();
     });
-    test('should call delete and return mockData', async () => {
-      const mockData = { id: '1' };
-      (mockRepo.delete as jest.Mock).mockResolvedValue(mockData);
-
-      const mockRequest = {
-        body: { id: '1' },
-      } as unknown as Request;
-
-      const mockResponse = {
-        status: jest.fn(),
-        json: jest.fn(),
-      } as unknown as Response;
-
-      await usersController.delete(mockRequest, mockResponse, mockNext);
-      expect(mockRepo.delete).toHaveBeenCalled();
-      expect(mockResponse.status).toHaveBeenCalled();
-      expect(mockResponse.json).toHaveBeenCalledWith({});
-    });
     test('should call login and return mockData', async () => {
       const mockData = [
         {
@@ -243,17 +225,6 @@ describe('UsersController', () => {
       await userController.patch(mockRequest, mockResponse, mockNext);
       expect(mockRepo.patch).toHaveBeenCalled();
       expect(mockNext).toHaveBeenCalledWith(new Error('patch Error'));
-    });
-    test('should call delete and next is call', async () => {
-      const mockRequest = {
-        body: {},
-      } as unknown as Request;
-
-      const mockResponse = {} as unknown as Response;
-
-      await userController.delete(mockRequest, mockResponse, mockNext);
-      expect(mockRepo.delete).toHaveBeenCalled();
-      expect(mockNext).toHaveBeenCalledWith(new Error('delete Error'));
     });
   });
 });

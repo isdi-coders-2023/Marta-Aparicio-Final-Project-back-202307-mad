@@ -1,4 +1,3 @@
-import { debug } from 'console';
 import { NextFunction, Request, Response } from 'express';
 import { Repository } from '../repository/repository.js';
 import { Auth } from '../services/auth.js';
@@ -53,7 +52,7 @@ export abstract class Controller<T extends { id: string | number }> {
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
-      debug(id, 'id');
+
       await this.repo.delete(id);
       res.status(204);
       res.json({});

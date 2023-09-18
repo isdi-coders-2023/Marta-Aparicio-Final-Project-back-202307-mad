@@ -30,7 +30,6 @@ export class RecipesController extends Controller<Recipe> {
       const img = await this.cloudinary.uploadImage(finalPath);
       req.body.img = img;
       const finalRecipe = await this.repo.post(req.body);
-      debug(finalRecipe);
       user.recipes.push(finalRecipe);
       userRepo.patch(user.id, user);
       res.status(201);
@@ -42,9 +41,7 @@ export class RecipesController extends Controller<Recipe> {
   async patch(req: Request, res: Response, next: NextFunction) {
     try {
       if (!this.repo.patch) return;
-      const recipeId = req.params.id;
-      const recipe = await this.repo.get(recipeId);
-      const updatedRecipe = await this.repo.patch(recipe.id, req.body);
+      const updatedRecipe = await this.repo.patch(req.params.id, req.body);
       res.json(updatedRecipe);
       res.status(201);
     } catch (error) {
