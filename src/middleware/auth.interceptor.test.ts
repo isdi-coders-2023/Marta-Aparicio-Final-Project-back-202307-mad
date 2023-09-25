@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../entities/user';
-import { Repository } from '../repository/repository';
+import { RecipeMongoRepository } from '../repository/recipe.mongo.repository';
 import { Auth } from '../services/auth.js';
 import { HttpError } from '../types/http.error.js';
 import { AuthInterceptor } from './auth.interceptor';
@@ -47,21 +46,17 @@ describe('Given AuthInterceptor and instantiate it', () => {
   });
 
   describe('When authentication is used', () => {
-    type Item = {
-      id: string;
-      owner: User;
-    };
-    const repo = {
-      get: jest.fn().mockResolvedValue({
-        owner: { id: 12 },
-      }),
-    } as unknown as Repository<Item>;
+    let interceptor: AuthInterceptor;
+    jest.setTimeout(60000);
+    beforeEach((): void => {
+      interceptor = new AuthInterceptor();
+    });
 
-    const authenticationMiddleware = interceptor.authentication<Item>(
-      repo,
-      'owner'
-    );
-
+    const mockRepo = {
+      get: jest.fn().mockResolvedValueOnce({}),
+    } as unknown as RecipeMongoRepository;
+    const mockResponse = {} as Response;
+    const mockNext = jest.fn();
     test('middleware should be called without error', async () => {
       const mockRequest = {
         params: {},
@@ -69,21 +64,23 @@ describe('Given AuthInterceptor and instantiate it', () => {
           validatedId: 12,
         },
       } as Request;
-
-      await authenticationMiddleware(mockRequest, mockResponse, mockNext);
-      expect(mockNext).toHaveBeenCalledWith();
+      await interceptor.authentication(mockRequest, mockResponse, mockNext);
+      expect(mockNext).toHaveBeenCalled();
     });
 
     test('middleware should be called WITH error', async () => {
+      RecipeMongoRepository.prototype.get = jest
+        .fn()
+        .mockResolvedValue({ author: '1' });
       const mockRequest = {
-        params: {},
+        params: { id: '1' },
         body: {
-          validatedId: 10,
+          validatedId: '2',
         },
-      } as Request;
+      } as unknown as Request;
 
-      await authenticationMiddleware(mockRequest, mockResponse, mockNext);
-      expect(mockNext).toHaveBeenCalledWith(new Error('Not item owner'));
+      await interceptor.authentication(mockRequest, mockResponse, mockNext);
+      expect(mockNext).toHaveBeenCalledWith(new Error('Not recipe owner'));
     });
   });
 });

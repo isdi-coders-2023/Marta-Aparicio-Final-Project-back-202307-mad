@@ -4,23 +4,18 @@ import { Recipe } from '../entities/recipe.js';
 const recipeSchema = new Schema<Recipe>({
   name: {
     type: String,
-    required: true,
-    unique: true,
   },
   category: {
     type: String,
-    required: true,
-    unique: true,
   },
 
   ingredients: {
     type: String,
-    required: true,
   },
   mode: {
     type: String,
-    required: true,
   },
+
   img: {
     type: {
       publicId: { type: String },
@@ -29,6 +24,7 @@ const recipeSchema = new Schema<Recipe>({
       format: { type: String },
       url: { type: String },
     },
+    required: true,
   },
   author: {
     type: Schema.Types.ObjectId,
@@ -45,4 +41,4 @@ recipeSchema.set('toJSON', {
   },
 });
 
-export const RecipeModel = model('Recipe', recipeSchema, 'recipies');
+export const RecipeModel = model('Recipe', recipeSchema, 'recipes');

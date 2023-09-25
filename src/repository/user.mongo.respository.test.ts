@@ -11,7 +11,7 @@ describe('Given the class UserMongoRepository', () => {
       password: '',
       firstName: '',
       lastName: '',
-      recipies: [],
+      recipes: [],
     };
     const mockDataNoId = {
       userName: '',
@@ -19,7 +19,7 @@ describe('Given the class UserMongoRepository', () => {
       password: '',
       firstName: '',
       lastName: '',
-      recipies: [],
+      recipes: [],
     };
     UserModel.find = jest
       .fn()
@@ -70,7 +70,7 @@ describe('Given the class UserMongoRepository', () => {
       password: '',
       firstName: '',
       lastName: '',
-      recipies: [],
+      recipes: [],
     };
 
     const repo = new UserMongoRepository();

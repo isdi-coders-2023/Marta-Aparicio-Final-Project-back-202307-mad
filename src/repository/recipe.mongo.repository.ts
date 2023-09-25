@@ -26,7 +26,7 @@ export class RecipeMongoRepository implements Repository<Recipe> {
       })
       .exec();
     if (!data)
-      throw new HttpError(404, 'Not Found', 'Task not found in file system', {
+      throw new HttpError(404, 'Not Found', 'Recipe not found in file system', {
         cause: 'Trying getById',
       });
     return data;
@@ -45,8 +45,9 @@ export class RecipeMongoRepository implements Repository<Recipe> {
         userName: 1,
       })
       .exec();
+    debug(data, 'data');
     if (!data)
-      throw new HttpError(404, 'Not Found', 'Task not found in file system', {
+      throw new HttpError(404, 'Not Found', 'Recipe not found in file system', {
         cause: 'Trying update',
       });
     return data;
@@ -55,7 +56,7 @@ export class RecipeMongoRepository implements Repository<Recipe> {
   async delete(id: string): Promise<void> {
     const result = await RecipeModel.findByIdAndDelete(id).exec();
     if (!result)
-      throw new HttpError(404, 'Not Found', 'Task not found in file system', {
+      throw new HttpError(404, 'Not Found', 'Recipe not found in file system', {
         cause: 'Trying delete',
       });
   }

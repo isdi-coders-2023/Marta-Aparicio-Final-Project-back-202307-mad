@@ -7,7 +7,7 @@ export type LoginData = {
 };
 type UserNoId = LoginData & {
   email: string;
-  recipies: Recipe[];
+  recipes: Recipe[];
 };
 
 export type User = WithId & UserNoId;

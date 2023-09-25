@@ -17,7 +17,7 @@ const userSchema = new Schema<User>({
     required: true,
   },
 
-  recipies: [
+  recipes: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Recipe',

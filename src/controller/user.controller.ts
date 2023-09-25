@@ -23,6 +23,7 @@ export class UsersController extends Controller<User> {
 
   async login(req: Request, res: Response, next: NextFunction) {
     const { userName, password } = req.body as unknown as LoginData;
+    const { id } = req.body as unknown as User;
     const error = new HttpError(401, 'UnAuthorized', 'Login unauthorized');
     try {
       const data = await this.repo.search({ key: 'userName', value: userName });
@@ -39,8 +40,9 @@ export class UsersController extends Controller<User> {
         id: user.id,
         userName: user.userName,
       };
+
       const token = Auth.signToken(payload);
-      res.json({ user, token });
+      res.json({ user, token, id });
     } catch (error) {
       next(error);
     }
