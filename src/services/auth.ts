@@ -16,7 +16,6 @@ export class Auth {
   static compare(passwd: string, hashPasswd: string) {
     const a = bcrypt.compare(passwd, hashPasswd);
     return a;
-    debug(a);
   }
 
   static signToken(payload: TokenPayload): string {
