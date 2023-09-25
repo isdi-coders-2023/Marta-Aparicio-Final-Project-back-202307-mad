@@ -45,6 +45,7 @@ export class RecipeMongoRepository implements Repository<Recipe> {
         userName: 1,
       })
       .exec();
+    debug(data, 'data');
     if (!data)
       throw new HttpError(404, 'Not Found', 'Recipe not found in file system', {
         cause: 'Trying update',

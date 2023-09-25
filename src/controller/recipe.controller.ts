@@ -22,7 +22,9 @@ export class RecipesController extends Controller<Recipe> {
       if (!req.file) {
         throw new HttpError(400, 'Bad Request', 'No picture for recipe');
       }
+      debug('img', req.file);
       const { validatedId } = req.body;
+      debug('id', validatedId);
       const userRepo = new UserMongoRepository();
       const user = await userRepo.get(validatedId);
       req.body.author = user.id;
@@ -40,8 +42,9 @@ export class RecipesController extends Controller<Recipe> {
   }
   async patch(req: Request, res: Response, next: NextFunction) {
     try {
-      if (!this.repo.patch) return;
+      debug(req.body, req.params.id, 'body y params');
       const updatedRecipe = await this.repo.patch(req.params.id, req.body);
+      debug(updatedRecipe, ' se actualiza?');
       res.json(updatedRecipe);
       res.status(201);
     } catch (error) {

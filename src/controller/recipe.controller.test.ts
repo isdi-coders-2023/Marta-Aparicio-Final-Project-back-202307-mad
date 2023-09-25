@@ -93,7 +93,7 @@ describe('RecipesController', () => {
   const recipesController = new RecipesController(mockRepo);
   describe('errors', () => {
     test('should call post and next is called', async () => {
-      const mockRequest = { file: {} } as Request;
+      const mockRequest = { file: null } as unknown as Request;
 
       const mockResponse = {
         json: jest.fn(),
@@ -103,23 +103,18 @@ describe('RecipesController', () => {
       expect(mockNext).toHaveBeenCalled();
     });
 
-    test('should call patch and next is called', async () => {
-      const mockData = {};
-      (mockRepo.patch as jest.Mock).mockResolvedValue(mockData);
-
+    test('Should call patch and next is called', async () => {
       const mockRequest = {
-        params: { id: '1' },
+        body: { image: {} },
+        params: '',
       } as unknown as Request;
-
       const mockResponse = {
-        status: jest.fn(),
         json: jest.fn(),
+        status: jest.fn(),
       } as unknown as Response;
-
+      const mockNext = jest.fn();
       await recipesController.patch(mockRequest, mockResponse, mockNext);
-      expect(mockRepo.patch).toHaveBeenCalled();
-      expect(mockResponse.status).toHaveBeenCalled();
-      expect(mockResponse.json).toHaveBeenCalledWith(mockData);
+      expect(mockNext).toHaveBeenCalled();
     });
     test('should call delete and next is called', async () => {
       const mockRequest = {

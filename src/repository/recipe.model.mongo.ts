@@ -4,21 +4,18 @@ import { Recipe } from '../entities/recipe.js';
 const recipeSchema = new Schema<Recipe>({
   name: {
     type: String,
-    required: true,
   },
   category: {
     type: String,
-    required: true,
   },
 
   ingredients: {
-    type: [String],
-    required: true,
+    type: String,
   },
   mode: {
     type: String,
-    required: true,
   },
+
   img: {
     type: {
       publicId: { type: String },
@@ -27,6 +24,7 @@ const recipeSchema = new Schema<Recipe>({
       format: { type: String },
       url: { type: String },
     },
+    required: true,
   },
   author: {
     type: Schema.Types.ObjectId,

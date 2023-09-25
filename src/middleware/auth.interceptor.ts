@@ -11,9 +11,9 @@ debug('Loaded');
 export class AuthInterceptor {
   authorization(req: Request, _res: Response, next: NextFunction) {
     debug('Call authorization interceptor');
-    debugger;
     try {
       const token = req.get('Authorization')?.split(' ')[1];
+      debug(token);
       if (!token) {
         throw new HttpError(498, 'Invalid token', 'No token provided');
       }
@@ -29,6 +29,7 @@ export class AuthInterceptor {
 
   async authentication(req: Request, _res: Response, next: NextFunction) {
     debug('Call recipesAuthentication');
+    debug(req.body, req.params.id, 'body y params');
     const userID = req.body.validatedId;
     const recipeID = req.params.id;
     try {
