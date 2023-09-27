@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { RecipeNoId } from '../entities/recipe';
+import { Recipe } from '../entities/recipe';
 import { RecipeMongoRepository } from '../repository/recipe.mongo.repository';
 import { UserMongoRepository } from '../repository/user.mongo.repository';
 import { CloudinaryService } from '../services/media.files';
@@ -17,14 +17,14 @@ describe('RecipesController', () => {
 
   const mockNext = jest.fn();
   const recipesController = new RecipesController(mockRepo);
-  describe('happy path', () => {
+  describe('Given recipe controller', () => {
     test('should call post and return mockData', async () => {
       UserMongoRepository.prototype.get = jest
         .fn()
         .mockResolvedValue({ id: '1', recipes: [] });
 
       const cloudinary = (CloudinaryService.prototype.uploadImage = jest.fn());
-      const mockData = { name: 'test' } as RecipeNoId;
+      const mockData = { name: 'test' } as Recipe;
       (mockRepo.post as jest.Mock).mockResolvedValue(mockData);
 
       const mockRequest = {
