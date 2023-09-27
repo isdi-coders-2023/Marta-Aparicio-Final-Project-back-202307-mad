@@ -22,7 +22,7 @@ describe('Given CloudinaryService', () => {
       const imdData = await cloudinary.uploadImage('');
       expect(imdData).toHaveProperty('publicId', 'Test image');
     });
-    test.only('Then its method resizePhoto should be used', async () => {
+    test('Then its method resizePhoto should be used', async () => {
       const img = {} as ImgData;
       cloudinaryBase.v2.url = jest.fn();
       cloudinary.resizeImage(img);
