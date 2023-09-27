@@ -24,7 +24,6 @@ recipeRouter.patch(
   '/:id',
   authInterceptor.authorization.bind(authInterceptor),
   authInterceptor.authentication.bind(authInterceptor),
-  // fileInterceptor.singleFileStore('img').bind(fileInterceptor),
   recipeController.patch.bind(recipeController)
 );
 recipeRouter.delete(
