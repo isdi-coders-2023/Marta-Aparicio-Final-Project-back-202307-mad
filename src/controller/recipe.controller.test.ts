@@ -18,7 +18,7 @@ describe('RecipesController', () => {
   const mockNext = jest.fn();
   const recipesController = new RecipesController(mockRepo);
   describe('Given recipe controller', () => {
-    test('should call method post, mockRepor.post, cloudinary... ', async () => {
+    test('should call method post, mockRepo.post, cloudinary and recive status and json response ', async () => {
       UserMongoRepository.prototype.get = jest
         .fn()
         .mockResolvedValue({ id: '1', recipes: [] });
