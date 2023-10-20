@@ -1,3 +1,4 @@
+import createDebug from 'debug';
 import { NextFunction, Request, Response } from 'express';
 import { LoginData, User } from '../entities/user.js';
 import { UserMongoRepository } from '../repository/user.mongo.repository.js';
@@ -6,6 +7,7 @@ import { HttpError } from '../types/http.error.js';
 import { TokenPayload } from '../types/token.js';
 import { Controller } from './controller.js';
 
+const debug = createDebug('Proyecto-final:Controller:UsersController');
 export class UsersController extends Controller<User> {
   constructor(protected repo: UserMongoRepository) {
     super(repo);
@@ -23,7 +25,6 @@ export class UsersController extends Controller<User> {
 
   async login(req: Request, res: Response, next: NextFunction) {
     const { userName, password } = req.body as unknown as LoginData;
-    const { id } = req.body as unknown as User;
     const error = new HttpError(401, 'UnAuthorized', 'Login unauthorized');
     try {
       const data = await this.repo.search({ key: 'userName', value: userName });
@@ -42,7 +43,7 @@ export class UsersController extends Controller<User> {
       };
 
       const token = Auth.signToken(payload);
-      res.json({ user, token, id });
+      res.json({ user, token });
     } catch (error) {
       next(error);
     }

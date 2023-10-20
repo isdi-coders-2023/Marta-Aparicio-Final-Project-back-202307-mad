@@ -4,7 +4,7 @@ import { User } from './user.js';
 
 export type RecipeNoId = {
   name: string;
-  category: 'Legumbres' | 'Pasta' | 'Verdura' | 'Otros' | 'Pescado' | 'Carnes';
+  category: string;
   ingredients: string;
   mode: string;
   img: ImgData;
